@@ -1,0 +1,355 @@
+:root {
+  --primary: #ff9fb4;
+  --bg-dark: #121212;
+  --bg-card: #1e1e1e;
+  --border: #333333;
+  --success: #4ade80;
+  --text-main: #ffffff;
+  --text-muted: #aaaaaa;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent; /* Saca el parpadeo azul en celu al tocar */
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh; /* Altura dinámica para celulares reales */
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: var(--bg-dark);
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem 1rem 6rem 1rem; /* Espacio extra abajo por el menú */
+}
+
+h2 {
+  text-align: center;
+  color: var(--primary);
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+
+/* --- BOTONES Y CARDS --- */
+.add-cat-btn {
+  width: 100%;
+  padding: 1rem;
+  background: transparent;
+  color: var(--primary);
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.inventory-category {
+  background: var(--bg-card);
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+}
+
+.cat-header {
+  display: flex;
+  flex-direction: column; /* Apila el título y el botón en dos renglones */
+  align-items: stretch; /* Estira el botón para que ocupe todo el ancho */
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+  gap: 1rem; /* Espacio perfecto entre el título y el botón */
+}
+
+.cat-title-actions { 
+  display: flex; 
+  align-items: center; 
+  gap: 0.5rem; 
+  width: 100%;
+}
+
+.cat-title-actions h3 { 
+  margin: 0; 
+  font-size: 1.2rem;
+  flex: 1; /* Empuja los íconos de editar y borrar bien a la derecha */
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
+
+.add-item-btn {
+  background: var(--primary);
+  color: #000;
+  border: none;
+  padding: 0.8rem; /* Lo hacemos un poquito más alto y cómodo */
+  border-radius: 8px;
+  font-weight: bold;
+  width: 100%; /* Ahora el botón ocupa todo el renglón de abajo */
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.item-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0,0,0,0.2);
+  padding: 0.8rem;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  border: 1px solid var(--border);
+}
+
+.item-info { display: flex; flex-direction: column; }
+.item-name { font-weight: bold; font-size: 0.95rem; }
+.item-price { font-size: 0.8rem; color: var(--text-muted); }
+
+.item-actions { display: flex; gap: 0.5rem; }
+.icon-btn { background: none; border: none; color: white; font-size: 1.2rem; padding: 0.5rem; }
+.icon-btn.delete { color: #ff5555; }
+
+/* --- FORMULARIOS --- */
+.mobile-form-card {
+  background: #252525;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--primary);
+  margin-bottom: 1rem;
+}
+
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+input, select {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-dark);
+  color: white;
+  font-size: 1rem;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.cancel-btn, .save-btn {
+  flex: 1;
+  padding: 1rem;
+  border-radius: 8px;
+  font-weight: bold;
+  border: none;
+}
+
+.cancel-btn { background: var(--border); color: white; }
+.save-btn { background: var(--success); color: #000; }
+
+/* --- CALCULADORA --- */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.materials-selector {
+  background: var(--bg-card);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+/* --- CALCULADORA (Checkboxes y Contadores) --- */
+.checkbox-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.checkbox-main {
+  display: flex;
+  align-items: flex-start; /* Alinea arriba por si el texto es muy largo */
+  gap: 0.8rem;
+  width: 100%;
+}
+
+.checkbox-main input[type="checkbox"] {
+  margin-top: 0.2rem; /* Lo centra visualmente con la primera línea de texto */
+  width: 22px;
+  height: 22px;
+  accent-color: var(--primary);
+  flex-shrink: 0; /* Evita que el checkbox se achique */
+}
+
+.item-text-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* Ocupa el resto del ancho disponible */
+}
+
+.item-text {
+  font-size: 0.95rem;
+  line-height: 1.3;
+  color: var(--text-main);
+}
+
+.tiny-cost {
+  color: var(--primary); /* Le damos un toque de color al precio para que resalte */
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-top: 0.1rem;
+}
+
+/* Estilos del contador mejorados para celular */
+.counter-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 2.5rem; /* Lo alinea exactamente debajo del texto, esquivando el checkbox */
+  background: var(--bg-dark); /* Fondo oscuro para que parezca un botón agrupado */
+  padding: 0.3rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  width: 130px; /* Ancho fijo para que los botones no se alejen de más */
+}
+
+.counter-controls button {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.counter-controls span {
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: var(--text-main);
+  text-align: center;
+  flex: 1;
+}
+
+.results-section {
+  background: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-top: 1.5rem;
+  border: 1px solid var(--border);
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+  color: #ccc;
+}
+
+hr { border: 0; border-top: 1px dashed var(--border); margin: 1rem 0; }
+.final-price { font-size: 1.3rem; font-weight: bold; color: var(--success); }
+
+/* --- NAVEGACIÓN INFERIOR --- */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+  padding-bottom: env(safe-area-inset-bottom); /* Para los iPhones nuevos */
+}
+
+.bottom-nav button {
+  flex: 1;
+  padding: 1.2rem;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.bottom-nav button.active {
+  color: var(--primary);
+  border-top: 3px solid var(--primary);
+}
+
+.search-input {
+  margin-bottom: 0.5rem;
+  background-color: var(--bg-dark);
+}
+
+.search-input:focus {
+  border-color: var(--primary);
+}
+
+/* =========================================
+   PARCHE PARA CELULARES (ZOOM Y ANCHOS)
+========================================= */
+
+/* 1. Evita el zoom automático en celulares forzando 16px */
+input, select, textarea {
+  font-size: 16px !important; 
+}
+
+/* 2. Fuerza a que toda la app use el 100% del ancho disponible sin encogerse */
+.app-wrapper {
+  width: 100%;
+  overflow-x: hidden; /* Evita que la pantalla se mueva hacia los costados */
+}
+
+.main-content {
+  width: 100%;
+  padding: 1.5rem 1rem 7rem 1rem; /* Mismo padding para todo */
+  overflow-x: hidden;
+}
+
+.view-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 3. Asegura que los inputs de la calculadora ocupen todo el ancho */
+.inputs-section {
+  width: 100%;
+}
+
+.input-group {
+  width: 100%;
+}
