@@ -354,15 +354,18 @@ export default function App() {
                           }}>✖</button>
                         </div>
                       ))}
-                      <div style={{display: 'flex', gap: '5px', marginTop: '10px'}}>
-                        <input type="text" placeholder="Nombre" value={choiceForm.name} onChange={e => setChoiceForm({...choiceForm, name: e.target.value})} style={{flex: 1, margin: 0}} />
-                        <input type="number" placeholder="$" value={choiceForm.price} onChange={e => setChoiceForm({...choiceForm, price: e.target.value})} style={{width: '70px', margin: 0}} />
-                        <button className="mini-btn" onClick={addChoiceToOption}>Añadir</button>
+                      
+                      {/* ESTO ES LO QUE ARREGLAMOS: Secciones apiladas verticalmente para móviles */}
+                      <div style={{display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px', background: 'var(--bg-color)', padding: '10px', borderRadius: '6px', border: '1px solid var(--border-color)'}}>
+                        <span style={{fontSize: '0.8em', color: 'var(--text-muted)'}}>Agregar nuevo elemento:</span>
+                        <input type="text" placeholder="Nombre del elemento" value={choiceForm.name} onChange={e => setChoiceForm({...choiceForm, name: e.target.value})} style={{width: '100%', margin: 0}} />
+                        <input type="number" placeholder="Precio ($)" value={choiceForm.price} onChange={e => setChoiceForm({...choiceForm, price: e.target.value})} style={{width: '100%', margin: 0}} />
+                        <button className="mini-btn" style={{padding: '10px', width: '100%', fontWeight: 'bold'}} onClick={addChoiceToOption}>+ Añadir Elemento</button>
                       </div>
                     </div>
                   )}
 
-                  <div style={{display: 'flex', gap: '10px', marginTop: '10px'}}>
+                  <div style={{display: 'flex', gap: '10px', marginTop: '15px'}}>
                     <button className="add-btn" style={{background: 'var(--section-bg)'}} onClick={() => { setActiveOptionForm(null); setEditingOptionId(null); }}>Cancelar</button>
                     <button className="add-btn" onClick={() => saveOptionToCategory(cat.id)}>{editingOptionId ? 'Actualizar' : 'Guardar'}</button>
                   </div>
