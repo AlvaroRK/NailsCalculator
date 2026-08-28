@@ -1,45 +1,78 @@
+/* =========================================
+   IMPORTACIÓN DE FUENTES (Gótica + Quicksand)
+========================================= */
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+
 :root {
-  --bg-color: #121212;
-  --card-bg: #1e1e1e;
-  --section-bg: #2a2a2a;
-  --accent: #6366f1;
-  --accent-hover: #4f46e5;
+  /* Paleta Oscura y Neón */
+  --bg-color: #050505; 
+  --card-bg: rgba(18, 18, 18, 0.85); 
+  --section-bg: rgba(30, 30, 30, 0.6);
+  --accent: #ff007f; 
+  --accent-hover: #e60073;
   --text-main: #f3f4f6;
   --text-muted: #9ca3af;
   --border-color: #374151;
-  --success: #10b981;
+  --success: #00ff00; 
+  
+  /* Colores Flúor Específicos para Textos */
+  --neon-pink: #ff00aa; 
+  --neon-green: #39ff14; 
 }
 
+/* =========================================
+   FONDO CON AURA VIOLETA POTENCIADA
+========================================= */
 body {
   background-color: var(--bg-color);
+  /* Aura mucho más intensa y expansiva para que resalte en el celu */
+  background-image: radial-gradient(circle at center, rgba(138, 43, 226, 0.45) 0%, rgba(138, 43, 226, 0.15) 45%, rgba(5, 5, 5, 1) 90%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  
   color: var(--text-main);
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Quicksand', system-ui, -apple-system, sans-serif;
   margin: 0;
   padding: 15px;
   display: flex;
   justify-content: center;
+  min-height: 100vh;
 }
 
 .app-wrapper {
   width: 100%;
   max-width: 500px;
+  position: relative;
+  z-index: 1; 
 }
 
 .calculator {
   background: var(--card-bg);
+  backdrop-filter: blur(10px); 
   width: 100%;
   border-radius: 12px;
   padding: 20px;
   box-sizing: border-box;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 25px rgba(138, 43, 226, 0.3); 
+  border: 1px solid rgba(138, 43, 226, 0.4);
 }
 
+/* =========================================
+   TIPOGRAFÍAS Y COLORES NEÓN (Títulos Góticos)
+========================================= */
 h2 {
   text-align: center;
   margin-top: 0;
-  font-size: 1.5em;
-  border-bottom: 2px solid var(--border-color);
+  font-family: 'UnifrakturMaguntia', cursive; 
+  font-size: 2.2em;
+  color: var(--neon-pink); 
+  text-shadow: 0 0 10px rgba(255, 0, 170, 0.7), 0 0 20px rgba(255, 0, 170, 0.5); 
+  border-bottom: 2px solid rgba(255, 0, 170, 0.3);
   padding-bottom: 15px;
+  letter-spacing: 2px;
 }
 
 .section {
@@ -47,15 +80,26 @@ h2 {
   border-radius: 8px;
   padding: 15px;
   margin-bottom: 15px;
+  border: 1px solid rgba(55, 65, 81, 0.5);
 }
 
 .section-title {
-  font-weight: 600;
-  color: var(--accent);
+  font-family: 'UnifrakturMaguntia', cursive; 
+  color: var(--neon-green); 
   margin-bottom: 15px;
-  font-size: 1.1em;
+  font-size: 1.5em;
+  text-shadow: 0 0 8px rgba(57, 255, 20, 0.6); 
+  letter-spacing: 1px;
 }
 
+/* Forzamos Quicksand en todos los inputs y botones */
+input, select, button {
+  font-family: 'Quicksand', system-ui, sans-serif;
+}
+
+/* =========================================
+   RESTO DE ESTILOS DE LA CALCULADORA
+========================================= */
 .form-row {
   display: flex;
   justify-content: space-between;
@@ -78,30 +122,24 @@ h2 {
 
 .label-title {
   display: block;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.95em;
 }
 
-.label-desc {
-  display: block;
-  font-size: 0.75em;
-  color: var(--text-muted);
-  margin-top: 2px;
-}
-
 .input-col {
-  width: 110px; /* Un poco más de espacio para el contador */
+  width: 110px;
 }
 
 select {
   width: 100%;
   padding: 10px;
-  background: var(--bg-color);
+  background: rgba(0, 0, 0, 0.5);
   border: 1px solid var(--border-color);
   color: var(--text-main);
   border-radius: 6px;
   box-sizing: border-box;
   font-size: 1em;
+  font-weight: 500;
 }
 
 input[type="checkbox"] {
@@ -113,16 +151,45 @@ input[type="checkbox"] {
 select:focus {
   outline: none;
   border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(255, 0, 127, 0.5);
 }
 
-/* =========================================
-   ESTILOS DEL NUEVO CONTADOR (- / +)
-========================================= */
+/* BOTONES DE SERVICIO PRINCIPAL */
+.service-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.service-btn {
+  flex: 1;
+  padding: 12px 5px;
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.service-btn.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+  box-shadow: 0 0 15px rgba(255, 0, 127, 0.6);
+}
+
+/* CONTADORES */
 .counter-controls {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--bg-color);
+  background: rgba(0, 0, 0, 0.5);
   border: 1px solid var(--border-color);
   border-radius: 6px;
   padding: 4px;
@@ -150,30 +217,30 @@ select:focus {
   background: var(--accent);
   color: white;
   border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(255, 0, 127, 0.8);
 }
 
 .counter-controls span {
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 700;
   color: var(--text-main);
   text-align: center;
   flex: 1;
 }
 
-/* =========================================
-   PARCHE PARA CELULARES
-========================================= */
+/* PARCHE PARA CELULARES */
 input, select {
   font-size: 16px !important; 
 }
 
+/* RESULTADO Y TICKET */
 .total-container {
   text-align: center;
   margin-top: 20px;
   padding: 20px;
-  background: rgba(16, 185, 129, 0.1);
+  background: rgba(57, 255, 20, 0.05);
   border-radius: 8px;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  border: 1px solid rgba(57, 255, 20, 0.3);
 }
 
 .total-label {
@@ -181,36 +248,98 @@ input, select {
   font-size: 0.9em;
   text-transform: uppercase;
   letter-spacing: 1px;
+  font-weight: 600;
 }
 
 .total-amount {
-  color: var(--success);
+  color: var(--neon-green);
   font-size: 2.2em;
-  font-weight: bold;
+  font-weight: 700;
   margin-top: 5px;
+  text-shadow: 0 0 10px rgba(57, 255, 20, 0.4);
 }
 
-
-/* =========================================
-   ESTILOS DE CONFIGURACIÓN Y MENÚ
-========================================= */
-.price-input {
-  width: 90px;
-  text-align: right;
-  font-weight: bold;
+.resumen-container {
+  background: var(--section-bg);
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 1px dashed rgba(255, 0, 170, 0.5);
 }
 
+.resumen-title {
+  font-size: 0.85em;
+  text-transform: uppercase;
+  color: var(--neon-pink);
+  margin-bottom: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+}
+
+.resumen-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9em;
+  margin-bottom: 8px;
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.resumen-item span:first-child {
+  color: var(--text-muted);
+}
+
+.resumen-empty {
+  text-align: center;
+  font-size: 0.85em;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* BOTONES DE EXPORTACIÓN (TICKET) */
+.export-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.btn-image {
+  flex: 1;
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.95em;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-image:hover {
+  background-color: var(--accent-hover);
+  box-shadow: 0 0 15px rgba(255, 0, 127, 0.5);
+}
+
+/* NAVEGACIÓN INFERIOR */
 .bottom-nav {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
   background: var(--card-bg);
+  backdrop-filter: blur(10px);
   display: flex;
   justify-content: space-around;
   padding: 10px 0;
-  border-top: 1px solid var(--border-color);
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+  border-top: 1px solid rgba(138, 43, 226, 0.4);
+  box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
   z-index: 100;
 }
 
@@ -219,164 +348,26 @@ input, select {
   border: none;
   color: var(--text-muted);
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 700;
   cursor: pointer;
   padding: 10px;
-  transition: color 0.3s;
+  transition: color 0.3s, text-shadow 0.3s;
 }
 
 .bottom-nav button.active {
-  color: var(--accent);
-}
-
-
-/* =========================================
-   BOTONES DE SERVICIO PRINCIPAL
-========================================= */
-.service-options {
-  display: flex;
-  flex-direction: column; /* Esto apila los botones uno abajo del otro */
-  gap: 10px;
-  width: 100%;
-  margin-bottom: 15px;
-}
-
-.service-btn {
-  flex: 1;
-  padding: 12px 5px;
-  background: var(--bg-color);
-  color: var(--text-main);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  font-size: 0.9em;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-align: center;
-}
-
-.service-btn.active {
-  background: var(--accent);
-  color: white;
-  border-color: var(--accent);
-  box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
-}
-
-
-
-/* =========================================
-   ESTILOS DEL CRUD DINÁMICO (PRECIOS)
-========================================= */
-.admin-cat-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  border-bottom: 2px solid var(--border-color);
-  padding-bottom: 5px;
-}
-
-.admin-cat-header h3 {
-  margin: 0;
-  color: var(--accent);
-  font-size: 1.1em;
-}
-
-.btn-add-cat {
-  width: 100%;
-  padding: 10px;
-  background: transparent;
-  color: var(--accent);
-  border: 1px dashed var(--accent);
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-bottom: 20px;
-}
-
-.btn-add-item {
-  background: var(--section-bg);
-  color: var(--text-main);
-  border: 1px solid var(--border-color);
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 0.85em;
-  cursor: pointer;
-}
-
-.admin-item-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--bg-color);
-  padding: 10px;
-  border-radius: 6px;
-  margin-bottom: 8px;
-  border: 1px solid var(--border-color);
-}
-
-.admin-item-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.admin-item-name {
-  font-weight: bold;
-  font-size: 0.95em;
-}
-
-.admin-item-type {
-  font-size: 0.75em;
-  color: var(--text-muted);
-  text-transform: uppercase;
-}
-
-.btn-delete {
-  background: transparent;
-  color: #ef4444;
-  border: none;
-  font-size: 1.2em;
-  cursor: pointer;
-  padding: 5px;
-}
-
-/* Formulario de nuevo ítem */
-.new-item-form {
-  background: var(--bg-color);
-  border: 1px solid var(--accent);
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.dropdown-builder {
-  background: var(--section-bg);
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px dashed var(--border-color);
-}
-
-.choice-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.85em;
-  margin-bottom: 5px;
-  padding-bottom: 5px;
-  border-bottom: 1px solid var(--border-color);
+  color: var(--neon-pink);
+  text-shadow: 0 0 8px rgba(255, 0, 170, 0.6);
 }
 
 /* =========================================
    CRUD CATEGORÍAS PERSONALIZADAS
 ========================================= */
 .custom-category-card {
-  border: 1px dashed var(--border-color);
+  border: 1px dashed rgba(57, 255, 20, 0.4); 
   border-radius: 8px;
   padding: 15px;
   margin-top: 15px;
-  background: var(--bg-color);
+  background: rgba(0, 0, 0, 0.4);
 }
 
 .custom-cat-header {
@@ -390,7 +381,7 @@ input, select {
 
 .custom-cat-header strong {
   font-size: 1.1em;
-  color: var(--accent);
+  color: var(--neon-green);
 }
 
 .mini-btn {
@@ -401,22 +392,36 @@ input, select {
   padding: 4px 8px;
   cursor: pointer;
   font-size: 0.85em;
+  font-weight: 600;
+  transition: all 0.2s ease;
 }
-.mini-btn.danger { color: #ef4444; }
+.mini-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.mini-btn.danger { color: #ff3333; }
+.mini-btn.danger:hover { background: rgba(255, 51, 51, 0.1); }
+
+.price-input {
+  width: 90px;
+  text-align: right;
+  font-weight: 700;
+}
 
 .option-builder {
-  background: var(--section-bg);
+  background: rgba(0, 0, 0, 0.6);
   padding: 15px;
   border-radius: 8px;
   margin-top: 10px;
+  border: 1px solid var(--border-color);
 }
 
 .option-builder select, .option-builder input {
   margin-bottom: 10px;
+  width: 100%;
 }
 
 .choices-list {
-  background: var(--bg-color);
+  background: rgba(0, 0, 0, 0.3);
   padding: 10px;
   border-radius: 6px;
   margin-bottom: 10px;
@@ -438,47 +443,22 @@ input, select {
   padding: 10px;
   border-radius: 6px;
   width: 100%;
-  font-weight: bold;
+  font-weight: 700;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+.add-btn:hover {
+  background: var(--accent-hover);
+  box-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
 }
 
 /* =========================================
-   RESUMEN DEL PRESUPUESTO (TICKET)
+   LOGO DEL TICKET (PNG TRANSPARENTE)
 ========================================= */
-.resumen-container {
-  background: var(--section-bg);
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 15px;
-  border: 1px dashed var(--border-color);
-}
-
-.resumen-title {
-  font-size: 0.85em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 12px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 8px;
-}
-
-.resumen-item {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9em;
-  margin-bottom: 8px;
-  color: var(--text-main);
-}
-
-.resumen-item span:first-child {
-  color: var(--text-muted);
-}
-
-.resumen-empty {
-  text-align: center;
-  font-size: 0.85em;
-  color: var(--text-muted);
-  font-style: italic;
+.ticket-logo {
+  display: block;
+  margin: 0 auto 15px auto;
+  max-width: 80px; /* Tamaño ajustable según tu preferencia */
+  height: auto;
+  /* Se eliminó el border-radius y la sombra para que el fondo del PNG sea verdaderamente transparente */
 }

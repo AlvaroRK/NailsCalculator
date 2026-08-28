@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
+import html2canvas from 'html2canvas'; 
 import './App.css';
 
 const generateId = () => Date.now().toString(36) + Math.random().toString(36).substring(2);
 
-// CATEGORÍAS PRECARGADAS 
 const INITIAL_CATEGORIES = [
   {
     id: 'cat_1', name: 'Servicios Base',
@@ -57,7 +57,6 @@ const INITIAL_CATEGORIES = [
 export default function App() {
   const [activeTab, setActiveTab] = useState('calculator');
 
-  // ÚNICO ESTADO: Todo es dinámico ahora usando LocalStorage
   const [customCategories, setCustomCategories] = useState(() => {
     const saved = localStorage.getItem('nail_custom_cats_v2');
     return saved ? JSON.parse(saved) : INITIAL_CATEGORIES;
@@ -196,6 +195,33 @@ export default function App() {
 
   const formatoMoneda = (monto) => new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 }).format(monto);
 
+  // --- EXPORTAR A IMAGEN ---
+  const descargarTicketComoImagen = async () => {
+    const ticketElement = document.getElementById('ticket-a-descargar');
+    
+    if (!ticketElement) return;
+
+    try {
+      const canvas = await html2canvas(ticketElement, {
+        backgroundColor: '#1e1e1e', 
+        scale: 2,
+        useCORS: true // Esto ayuda a que el logo se renderice bien si hay temas de permisos
+      });
+      
+      const imagenDataUrl = canvas.toDataURL('image/png');
+      
+      const a = document.createElement('a');
+      a.href = imagenDataUrl;
+      a.download = `Ticket-AluciNails-${Date.now()}.png`;
+      a.click();
+      
+    } catch (error) {
+      console.error("Error al generar la imagen", error);
+      alert("Hubo un error al crear la imagen del ticket.");
+    }
+  };
+
+
   return (
     <div className="app-wrapper">
       
@@ -255,25 +281,44 @@ export default function App() {
             </div>
           ))}
 
-          {/* RESUMEN DEL SERVICIO */}
-          <div className="resumen-container">
-            <div className="resumen-title">Detalle del Servicio</div>
-            {resumenList.length === 0 ? (
-              <div className="resumen-empty">Seleccioná opciones para ver el desglose.</div>
-            ) : (
-              resumenList.map((item, idx) => (
-                <div className="resumen-item" key={idx}>
-                  <span>{item.cantidad > 1 ? `${item.cantidad}x ` : ''}{item.nombre}</span>
-                  <strong>{item.subtotal === 0 ? 'Incluido' : formatoMoneda(item.subtotal)}</strong>
-                </div>
-              ))
-            )}
+          {/* CAJA DEL TICKET ENCAPSULADA PARA LA FOTO */}
+          <div id="ticket-a-descargar" style={{padding: '10px'}}>
+            <div className="resumen-container">
+              
+              {/* ACÁ ESTÁ EL LOGO DE ALUCINAILS */}
+              {/* Si tu archivo tiene extensión, cambialo por src="/nails.png" o src="/nails.jpg" */}
+              <img src="/nails.png" alt="Logo AluciNails" className="ticket-logo" />
+
+              <div className="resumen-title">Detalle del Servicio</div>
+              {resumenList.length === 0 ? (
+                <div className="resumen-empty">Seleccioná opciones para ver el desglose.</div>
+              ) : (
+                resumenList.map((item, idx) => (
+                  <div className="resumen-item" key={idx}>
+                    <span>{item.cantidad > 1 ? `${item.cantidad}x ` : ''}{item.nombre}</span>
+                    <strong>{item.subtotal === 0 ? 'Incluido' : formatoMoneda(item.subtotal)}</strong>
+                  </div>
+                ))
+              )}
+              
+              <div style={{marginTop: '15px', paddingTop: '15px', borderTop: '2px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                <span style={{color: 'var(--text-muted)', textTransform: 'uppercase', fontSize: '0.85em', fontWeight: 'bold'}}>Total</span>
+                <span style={{color: 'var(--success)', fontSize: '1.5em', fontWeight: 'bold'}}>{formatoMoneda(total)}</span>
+              </div>
+
+              <div style={{textAlign: 'center', marginTop: '20px', fontSize: '0.9em', color: 'var(--text-muted)', fontStyle: 'italic', fontWeight: '500'}}>
+                ¡Gracias por elegir AluciNails!
+              </div>
+            </div>
           </div>
 
-          <div className="total-container">
-            <div className="total-label">Total a cobrar</div>
-            <div className="total-amount">{formatoMoneda(total)}</div>
+          {/* BOTÓN ÚNICO DE EXPORTACIÓN */}
+          <div className="export-actions">
+            <button className="btn-image" style={{width: '100%'}} onClick={descargarTicketComoImagen}>
+              🖼️ Guardar Ticket
+            </button>
           </div>
+
         </div>
       )}
 
@@ -355,7 +400,6 @@ export default function App() {
                         </div>
                       ))}
                       
-                      {/* ESTO ES LO QUE ARREGLAMOS: Secciones apiladas verticalmente para móviles */}
                       <div style={{display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px', background: 'var(--bg-color)', padding: '10px', borderRadius: '6px', border: '1px solid var(--border-color)'}}>
                         <span style={{fontSize: '0.8em', color: 'var(--text-muted)'}}>Agregar nuevo elemento:</span>
                         <input type="text" placeholder="Nombre del elemento" value={choiceForm.name} onChange={e => setChoiceForm({...choiceForm, name: e.target.value})} style={{width: '100%', margin: 0}} />
